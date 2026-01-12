@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RushiMarket | Top Up & CV Saldo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --accent: #8e44ad;
+            --accent-light: #a29bfe;
+            --glass: rgba(255, 255, 255, 0.08);
+            --dana: #008ced;
+            --gopay: #00aa13;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: white; margin: 0; padding: 0; min-height: 100vh;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            padding: 20px; text-align: center;
+            border-bottom: 2px solid var(--accent);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        header h1 {
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0; font-size: 28px; letter-spacing: 4px;
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .container { max-width: 480px; margin: 20px auto; padding: 0 15px; }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px; padding: 20px; margin-bottom: 20px;
+        }
+
+        .step-num {
+            background: var(--accent);
+            color: white; font-size: 11px; padding: 3px 10px;
+            border-radius: 50px; margin-bottom: 12px;
+            display: inline-block; font-weight: bold;
+        }
+
+        h3 { margin: 0 0 15px 0; font-size: 17px; }
+
+        .category-label {
+            font-size: 11px; text-transform: uppercase;
+            letter-spacing: 1px; margin: 15px 0 8px 0;
+            color: var(--accent-light); font-weight: bold;
+        }
+
+        .game-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+
+        .game-item, .method-item {
+            cursor: pointer; text-align: center; transition: 0.3s;
+            background: rgba(255,255,255,0.05);
+            padding: 15px 10px; border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .game-item h2, .method-item h2 { font-family: 'Rajdhani', sans-serif; margin: 0; font-size: 18px; }
+
+        .game-item.active { border-color: var(--accent-light); background: rgba(142, 68, 173, 0.3); }
+
+        .method-item.active { border-color: white; background: rgba(255, 255, 255, 0.1); }
+        .method-item.qris.active { border-color: #ff9f43; background: rgba(255, 159, 67, 0.2); }
+        .method-item.dana.active { border-color: var(--dana); background: rgba(0, 140, 237, 0.2); }
+        .method-item.gopay.active { border-color: var(--gopay); background: rgba(0, 170, 19, 0.2); }
+
+        .payment-info {
+            margin-top: 15px; padding: 15px;
+            background: rgba(0, 0, 0, 0.4); border-radius: 12px;
+            border: 1px dashed var(--accent-light); display: none; text-align: center;
+        }
+
+        .payment-info strong { font-size: 18px; color: white; display: block; margin-top: 5px; }
+
+        input {
+            width: 100%; background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 15px; border-radius: 12px; color: white;
+            box-sizing: border-box; outline: none; margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .nominal-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+            max-height: 300px; overflow-y: auto; padding-right: 5px;
+        }
+
+        .nominal-item {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px; border-radius: 12px; cursor: pointer; text-align: center;
+        }
+
+        .nominal-item.active { border-color: var(--accent); background: rgba(142, 68, 173, 0.3); }
+        .nominal-item p { margin: 0; font-size: 13px; font-weight: bold; }
+        .nominal-item span { font-size: 10px; color: var(--accent-light); }
+
+        .btn-buy {
+            width: 100%; background: linear-gradient(45deg, var(--accent), #6c5ce7);
+            color: white; border: none; padding: 20px; border-radius: 15px;
+            font-size: 18px; font-weight: bold; cursor: pointer; margin-bottom: 50px;
+        }
+
+        footer { text-align: center; padding: 20px; font-size: 10px; opacity: 0.5; }
+    </style>
+</head>
+<body>
+
+<header><h1>RUSHI<span style="color:var(--accent-light)">MARKET</span></h1></header>
+
+<div class="container">
+    <div class="card">
+        <div class="step-num">Step 1</div>
+        <h3>Pilih Layanan</h3>
+        <div class="category-label">Top Up Game</div>
+        <div class="game-grid">
+            <div class="game-item" onclick="setGame('Mobile Legends', this, 'Game')"><h2>MOBILE LEGENDS</h2></div>
+            <div class="game-item" onclick="setGame('Free Fire', this, 'Game')" style="margin-top:5px;"><h2>FREE FIRE</h2></div>
+            <div class="game-item" onclick="setGame('Roblox', this, 'Game')" style="margin-top:5px;"><h2>ROBLOX</h2></div>
+        </div>
+        <div class="category-label" style="margin-top:15px;">Convert Saldo (Admin 500)</div>
+        <div class="game-grid">
+            <div class="game-item" onclick="setGame('CV DANA', this, 'CV')"><h2>DANA</h2></div>
+            <div class="game-item" onclick="setGame('CV OVO', this, 'CV')" style="margin-top:5px;"><h2>OVO</h2></div>
+            <div class="game-item" onclick="setGame('CV GoPay', this, 'CV')" style="margin-top:5px;"><h2>GOPAY</h2></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="step-num">Step 2</div>
+        <h3 id="label_id">Data Akun</h3>
+        <input type="text" id="user_id" placeholder="Pilih Layanan Dahulu">
+    </div>
+
+    <div class="card">
+        <div class="step-num">Step 3</div>
+        <h3>Pilih Nominal</h3>
+        <div id="nominal_list" class="nominal-grid">
+            <p style="text-align: center; width: 100%; grid-column: 1/3; opacity: 0.5;">Pilih layanan di Step 1...</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="step-num">Step 4</div>
+        <h3>Metode Pembayaran</h3>
+        <div class="game-grid">
+            <div class="method-item qris" onclick="setMethod('QRIS (Minta di WA)', this, 'Minta Kode QRIS via WhatsApp Admin')"><h2>QRIS (VIA WA)</h2></div>
+            <div class="method-item dana" onclick="setMethod('DANA', this, 'Transfer ke DANA:')" style="margin-top:5px;"><h2>DANA</h2></div>
+            <div class="method-item gopay" onclick="setMethod('GoPay', this, 'Transfer ke GOPAY:')" style="margin-top:5px;"><h2>GOPAY</h2></div>
+        </div>
+
+        <div id="box_info" class="payment-info">
+            <p id="text_instruksi"></p>
+            <strong id="nomor_tujuan"></strong>
+        </div>
+    </div>
+
+    <button class="btn-buy" onclick="checkout()">PESAN SEKARANG</button>
+    <footer>&copy; 2026 RushiMarket Digital Indonesia</footer>
+</div>
+
+<script>
+    let selectedGame = ""; 
+    let selectedItem = ""; 
+    let selectedPrice = ""; 
+    let selectedMethod = "";
+    let currentCategory = "";
+
+    const cvNominals = ["15.000", "20.000", "25.000", "30.000", "35.000", "40.000", "45.000", "50.000", "55.000", "60.000", "65.000", "70.000", "75.000", "80.000", "85.000", "90.000", "95.000", "100.000", "150.000", "200.000", "250.000", "300.000", "350.000", "400.000", "500.000", "600.000", "700.000", "800.000", "900.000", "1.000.000"];
+    const cvData = cvNominals.map(val => ({ n: `Saldo ${val}`, p: 'Admin 500' }));
+
+    const catalog = {
+        'Mobile Legends': [
+            {n: '12 Diamonds', p: 'Rp 4.500'}, {n: '50 Diamonds', p: 'Rp 15.000'},
+            {n: '70 Diamonds', p: 'Rp 23.000'}, {n: '100 Diamonds', p: 'Rp 30.000'},
+            {n: '150 Diamonds', p: 'Rp 45.000'}, {n: '240 Diamonds', p: 'Rp 66.000'},
+            {n: '305 Diamonds', p: 'Rp 85.000'}, {n: '570 Diamonds', p: 'Rp 150.000'},
+            {n: '750 Diamonds', p: 'Rp 200.000'}, {n: '1159 Diamonds', p: 'Rp 310.000'},
+            {n: '2010 Diamonds', p: 'Rp 500.000'}, {n: '4840 Diamonds', p: 'Rp 1.170.000'},
+            {n: 'WDP 1×', p: 'Rp 30.000'}, {n: 'WDP 2×', p: 'Rp 55.000'}
+        ],
+        'Free Fire': [
+            {n: '12 Diamonds', p: 'Rp 2.000'}, {n: '50 Diamonds', p: 'Rp 8.500'},
+            {n: '70 Diamonds', p: 'Rp 10.000'}, {n: '100 Diamonds', p: 'Rp 15.000'},
+            {n: '140 Diamonds', p: 'Rp 19.000'}, {n: '310 Diamonds', p: 'Rp 46.000'},
+            {n: '520 Diamonds', p: 'Rp 77.000'}, {n: '720 Diamonds', p: 'Rp 95.000'},
+            {n: '1080 Diamonds', p: 'Rp 145.000'}, {n: '2180 Diamonds', p: 'Rp 280.000'},
+            {n: 'Membership Mingguan', p: 'Rp 30.000'}, {n: 'Membership Bulanan', p: 'Rp 85.000'}
+        ],
+        'Roblox': [
+            {n: '50 RBX', p: 'Rp 8.000'}, {n: '100 RBX', p: 'Rp 15.000'},
+            {n: '200 RBX', p: 'Rp 29.000'}, {n: '300 RBX', p: 'Rp 42.000'},
+            {n: '400 RBX', p: 'Rp 57.000'}, {n: '500 RBX', p: 'Rp 69.000'},
+            {n: '700 RBX', p: 'Rp 97.000'}, {n: '800 RBX', p: 'Rp 110.000'},
+            {n: '900 RBX', p: 'Rp 123.000'}, {n: '1000 RBX', p: 'Rp 137.000'},
+            {n: '1050 RBX', p: 'Rp 145.000'}, {n: '1100 RBX', p: 'Rp 152.000'},
+            {n: '1300 RBX', p: 'Rp 180.000'}
+        ],
+        'CV DANA': cvData, 'CV OVO': cvData, 'CV GoPay': cvData
+    };
+
+    function setGame(game, el, category) {
+        selectedGame = game; 
+        selectedItem = "";
+        currentCategory = category;
+
+        // Logika Ganti Label Step 2
+        const labelId = document.getElementById('label_id');
+        const inputId = document.getElementById('user_id');
+        
+        if(category === 'CV') {
+            labelId.innerText = "Nomor HP Tujuan";
+            inputId.placeholder = "Masukkan No HP Penerima";
+        } else {
+            labelId.innerText = "User ID Akun";
+            inputId.placeholder = "Masukkan ID (Contoh: 12345678)";
+        }
+
+        document.querySelectorAll('.game-item').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+        const list = document.getElementById('nominal_list');
+        list.innerHTML = "";
+        catalog[game].forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'nominal-item';
+            div.innerHTML = `<p>${item.n}</p><span>${item.p}</span>`;
+            div.onclick = function() {
+                document.querySelectorAll('.nominal-item').forEach(n => n.classList.remove('active'));
+                div.classList.add('active');
+                selectedItem = item.n; selectedPrice = item.p;
+            };
+            list.appendChild(div);
+        });
+    }
+
+    function setMethod(method, el, instruksi) {
+        selectedMethod = method;
+        document.querySelectorAll('.method-item').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+        const infoBox = document.getElementById('box_info');
+        const nomorTujuan = document.getElementById('nomor_tujuan');
+        infoBox.style.display = "block";
+        document.getElementById('text_instruksi').innerText = instruksi;
+        
+        if(method === 'DANA') nomorTujuan.innerText = "085707890755";
+        else if(method === 'GoPay') nomorTujuan.innerText = "085707356154";
+        else nomorTujuan.innerText = "Minta di WhatsApp Admin";
+    }
+
+    function checkout() {
+        const id = document.getElementById('user_id').value;
+        if(!selectedGame || !id || !selectedItem || !selectedMethod) return alert("Lengkapi data!");
+        
+        let labelData = currentCategory === 'CV' ? "No HP Tujuan" : "User ID";
+        let paymentText = selectedMethod;
+        if(selectedMethod.includes('QRIS')) paymentText = "QRIS (Tolong kirim kode qr nya min)";
+
+        const msg = `Halo Admin RushiMarket!\n\n` +
+                    `📌 Layanan: *${selectedGame}*\n` +
+                    `🆔 ${labelData}: *${id}*\n` +
+                    `💎 Paket: *${selectedItem}*\n` +
+                    `💰 Total: *${selectedPrice}*\n` +
+                    `💳 Metode: *${paymentText}*\n\n` +
+                    `Mohon diproses segera!`;
+        
+        window.open(`https://wa.me/6285707356154?text=${encodeURIComponent(msg)}`);
+    }
+</script>
+
+</body>
+</html>
