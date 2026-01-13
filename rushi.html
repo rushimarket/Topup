@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RushiMarket | Top Up & CV Saldo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-body: #121212;
+            --bg-card: #1f1f1f;
+            --bg-item: #2b2b2b;
+            --accent: #f1c40f; 
+            --text-white: #ffffff;
+            --text-gray: #a0a0a0;
+            --border: #333;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-white);
+            margin: 0; padding: 0;
+            padding-bottom: 120px;
+        }
+
+        .top-info-bar {
+            background: #000;
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            border-bottom: 1px solid #222;
+        }
+        .top-location { display: flex; align-items: center; gap: 6px; }
+        .top-location i { color: #ff4d4d; }
+        .top-lang { display: flex; gap: 10px; }
+        .top-lang span { cursor: pointer; }
+        .lang-active { color: var(--accent); font-weight: 700; }
+
+        header {
+            background: #181818;
+            padding: 15px 20px;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 20px; font-weight: 800; color: var(--accent);
+            margin: 0; letter-spacing: 0.5px; text-transform: uppercase;
+        }
+        header h1 span { color: #ffffff; }
+
+        .container { max-width: 500px; margin: 0 auto; padding: 15px; }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px; padding: 20px; margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .step-num {
+            color: var(--accent); font-weight: 700; font-size: 12px;
+            margin-bottom: 8px; display: block; text-transform: uppercase;
+        }
+
+        h3 { margin: 0 0 15px 0; font-size: 16px; font-weight: 600; }
+
+        .category-label {
+            font-size: 11px; font-weight: 700; color: var(--text-gray);
+            margin: 20px 0 10px 0; text-transform: uppercase; border-left: 3px solid var(--accent);
+            padding-left: 8px;
+        }
+
+        .grid-layout { display: grid; gap: 10px; }
+        .grid-2 { grid-template-columns: 1fr 1fr; }
+        .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+        .select-btn {
+            background: var(--bg-item); border: 1px solid #444;
+            padding: 12px 8px; border-radius: 10px; text-align: center;
+            cursor: pointer; transition: 0.2s;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .select-btn h2 { margin: 0; font-size: 11px; font-weight: 600; color: white; }
+        .select-btn p { margin: 0; font-size: 13px; font-weight: 700; }
+        .select-btn small { font-size: 10px; color: var(--text-gray); font-weight: 400; display: block; }
+        .select-btn span { font-size: 10px; color: var(--accent); display: block; margin-top: 4px; }
+        .select-btn.active { border-color: var(--accent); background: rgba(241, 196, 15, 0.1); }
+
+        input[type="text"], input[type="email"] {
+            width: 100%; background: #111; border: 1px solid #444;
+            padding: 15px; border-radius: 8px; color: white; box-sizing: border-box;
+            outline: none; font-size: 14px; margin-bottom: 10px;
+        }
+
+        .important-note {
+            font-size: 11px; color: #ff4d4d; line-height: 1.4; margin-top: 5px; font-weight: 500;
+        }
+
+        .gogogo-footer-content { margin-top: 20px; padding: 0 5px; }
+        .promo-text { font-size: 14px; margin-bottom: 25px; font-weight: 400; color: #eee; }
+        
+        .region-lang-section { margin-bottom: 20px; }
+        .region-lang-title { font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #fff; }
+        .region-selector { 
+            display: flex; align-items: center; justify-content: space-between; 
+            border: 1px solid var(--accent); border-radius: 8px; padding: 10px 15px;
+            width: fit-content; min-width: 150px; cursor: pointer;
+        }
+        .region-selector img { width: 20px; margin-right: 10px; }
+        .region-selector span { font-size: 14px; color: var(--accent); font-weight: 500; }
+
+        .payment-logos { display: flex; align-items: center; gap: 15px; margin-bottom: 5px; flex-wrap: wrap; }
+        .payment-logos span { font-weight: 800; font-size: 14px; }
+
+        .acc-item { border-top: 1px solid #222; padding: 15px 0; }
+        .acc-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .acc-header span { font-size: 14px; font-weight: 500; }
+        .acc-content { display: none; padding: 10px 0; font-size: 13px; color: var(--text-gray); line-height: 1.8; }
+        .acc-content a { color: var(--text-gray); text-decoration: none; display: block; margin-bottom: 5px; }
+
+        .sticky-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: #181818; border-top: 1px solid #333;
+            padding: 12px 20px; display: flex; justify-content: space-between;
+            align-items: center; box-sizing: border-box; z-index: 1001;
+        }
+        .final-price-tag {
+            position: absolute; top: -35px; left: 0; width: 100%;
+            background: #2ecc71; color: #000; font-size: 12px;
+            padding: 8px 15px; box-sizing: border-box; font-weight: 600;
+            display: flex; align-items: center;
+        }
+        .final-price-tag i { margin-right: 8px; }
+
+        .btn-beli {
+            background: #ffc107; color: #000; border: none;
+            padding: 10px 35px; border-radius: 15px; font-weight: 700;
+            font-size: 15px; cursor: pointer; min-width: 100px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-info-bar">
+    <div class="top-location"><i class="fas fa-location-dot"></i> <span>Indonesia</span></div>
+    <div class="top-lang"><span class="lang-active">Indonesia</span> <span>|</span> <span>English</span></div>
+</div>
+
+<header>
+    <h1>RUSHI<span>MARKET</span></h1>
+    <i class="fas fa-bars" style="font-size: 20px;"></i>
+</header>
+
+<div class="container">
+    <div class="card">
+        <span class="step-num">Step 1</span>
+        <h3>Pilih Layanan</h3>
+        <div class="category-label">Top Up Game</div>
+        <div class="grid-layout grid-3">
+            <div class="select-btn" onclick="setGame('MLBB', this, 'Game')"><h2>MLBB</h2></div>
+            <div class="select-btn" onclick="setGame('Free Fire', this, 'Game')"><h2>FREE FIRE</h2></div>
+            <div class="select-btn" onclick="setGame('Roblox', this, 'Game')"><h2>ROBLOX</h2></div>
+            <div class="select-btn" onclick="setGame('PUBG', this, 'Game')"><h2>PUBG</h2></div>
+            <div class="select-btn" onclick="setGame('Magic Chess', this, 'Game')"><h2>MAGIC CHESS</h2></div>
+            <div class="select-btn" onclick="setGame('Blood Strike', this, 'Game')"><h2>BS</h2></div>
+        </div>
+        <div class="category-label">Convert Saldo (+ Admin 500)</div>
+        <div class="grid-layout grid-3">
+            <div class="select-btn" onclick="setGame('CV DANA', this, 'CV')"><h2>DANA</h2></div>
+            <div class="select-btn" onclick="setGame('CV OVO', this, 'CV')"><h2>OVO</h2></div>
+            <div class="select-btn" onclick="setGame('CV GoPay', this, 'CV')"><h2>GOPAY</h2></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <span class="step-num">Step 2</span>
+        <h3 id="label_id">Data Akun</h3>
+        <input type="text" id="user_id" placeholder="Pilih Layanan Dahulu">
+        
+        <h3 style="margin-top: 15px; font-size: 14px;">Masukkan Email (Wajib)</h3>
+        <input type="email" id="user_email" placeholder="Contoh: user@email.com">
+        <p class="important-note">PENTING: Email dibutuhkan untuk bukti transfer & proses refund jika transaksi gagal.</p>
+    </div>
+
+    <div class="card">
+        <span class="step-num">Step 3</span>
+        <h3>Pilih Nominal</h3>
+        <div id="nominal_list" class="grid-layout grid-2" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
+            <p style="text-align: center; width: 100%; grid-column: span 2; opacity: 0.5; font-size: 12px; padding: 20px;">Pilih layanan di Step 1 untuk melihat daftar nominal...</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <span class="step-num">Step 4</span>
+        <h3>Metode Pembayaran</h3>
+        <div class="grid-layout grid-2">
+            <div class="select-btn" onclick="setMethod('QRIS', this)"><h2>QRIS</h2></div>
+            <div class="select-btn" onclick="setMethod('DANA', this)"><h2>DANA</h2></div>
+            <div class="select-btn" onclick="setMethod('GoPay', this)" style="grid-column: span 2;"><h2>GOPAY</h2></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <span class="step-num">Step 5</span>
+        <h3>Nomor WhatsApp <span style="color:var(--text-gray); font-size: 12px; font-weight: 400;">(Opsional)</span></h3>
+        <input type="text" id="wa_number" placeholder="Contoh: 081234567xxx">
+    </div>
+
+    <div class="gogogo-footer-content">
+        <p class="promo-text">Toko game online harga termurah tanpa biaya admin</p>
+        
+        <div class="region-lang-section">
+            <div class="region-lang-title">Wilayah & Bahasa</div>
+            <div class="region-selector">
+                <div style="display:flex; align-items:center;">
+                    <img src="https://flagcdn.com/w40/id.png" alt="Indonesia Flag">
+                    <span>Indonesia</span>
+                </div>
+                <i class="fas fa-chevron-right" style="color:var(--accent); font-size:12px; margin-left:10px;"></i>
+            </div>
+        </div>
+
+        <p style="font-size: 13px; font-weight: 500; margin-bottom: 10px;">Mudah, cepat, dan 100% aman</p>
+        <div class="payment-logos">
+            <span style="color:#00aa13;">gopay</span> <span style="color:#008ced;">DANA</span> <span style="color:#4c3494;">OVO</span> <span style="color:#ee4d2d;">ShopeePay</span>
+        </div>
+        <p style="font-size: 11px; color: #888; margin-top: 0; margin-bottom: 20px;">+metode bayar populer lainnya</p>
+
+        <div class="acc-item">
+            <div class="acc-header" onclick="toggleAcc('acc1')"><span>Top Up</span><i class="fas fa-chevron-down"></i></div>
+            <div id="acc1" class="acc-content"><a href="#">Mobile Legends</a><a href="#">Free Fire</a><a href="#">PUBG Mobile</a><a href="#">Blood Strike</a><a href="#">Magic Chess</a></div>
+        </div>
+        <div class="acc-item">
+            <div class="acc-header" onclick="toggleAcc('acc2')"><span>Voucher & Saldo</span><i class="fas fa-chevron-down"></i></div>
+            <div id="acc2" class="acc-content"><a href="#">Roblox (RBX)</a><a href="#">Convert DANA</a><a href="#">Convert OVO</a><a href="#">Convert GoPay</a></div>
+        </div>
+        <div class="acc-item">
+            <div class="acc-header" onclick="toggleAcc('acc3')"><span>Hubungi CS</span><i class="fas fa-chevron-down"></i></div>
+            <div id="acc3" class="acc-content">
+                <a href="https://wa.me/6285707356154" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp: 085707356154</a>
+                <a href="mailto:rushimarket.id@gmail.com"><i class="far fa-envelope"></i> Email: rushimarket.id@gmail.com</a>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 20px; font-size: 11px; color: #666;">© 2026 RushiMarket Digital Indonesia</div>
+    </div>
+</div>
+
+<div class="sticky-bar">
+    <div class="final-price-tag"><i class="fas fa-check-circle"></i> Harga final, dijamin gak ada biaya tambahan!</div>
+    <div style="font-size: 11px; color: #888;">Total Bayar<br><strong id="sticky_total" style="font-size: 16px; color: var(--accent);">Rp 0</strong></div>
+    <button class="btn-beli" onclick="checkout()">Beli</button>
+</div>
+
+<script>
+    let selectedGame = ""; let selectedItem = ""; let selectedPrice = ""; let selectedMethod = ""; let currentCategory = "";
+
+    function formatRupiah(angka) {
+        return "Rp " + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    const cvSteps = [15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 250, 300, 400, 500, 750, 1000];
+    const cvData = cvSteps.map(v => {
+        const nominalAsli = v * 1000;
+        const hargaFinal = nominalAsli + 500;
+        return { n: `Saldo ${v >= 1000 ? '1 Juta' : v + '.000'}`, b: '', p: formatRupiah(hargaFinal) };
+    });
+
+    const catalog = {
+        'MLBB': [
+            {n: '3 Diamonds', b: '', p: 'Rp 1.171'}, {n: '5 Diamonds', b: '', p: 'Rp 1.423'}, {n: '12 Diamonds', b: '(11 + 1 Bonus)', p: 'Rp 3.323'},
+            {n: '19 Diamonds', b: '(17 + 2 Bonus)', p: 'Rp 5.223'}, {n: '28 Diamonds', b: '(25 + 3 Bonus)', p: 'Rp 7.600'}, {n: '44 Diamonds', b: '(40 + 4 Bonus)', p: 'Rp 11.400'},
+            {n: '59 Diamonds', b: '(53 + 6 Bonus)', p: 'Rp 15.200'}, {n: '85 Diamonds', b: '(77 + 8 Bonus)', p: 'Rp 21.850'}, {n: '170 Diamonds', b: '(154 + 16 Bonus)', p: 'Rp 43.700'},
+            {n: '240 Diamonds', b: '(217 + 23 Bonus)', p: 'Rp 61.750'}, {n: '296 Diamonds', b: '(256 + 40 Bonus)', p: 'Rp 76.000'}, {n: '408 Diamonds', b: '(367 + 41 Bonus)', p: 'Rp 104.500'},
+            {n: '568 Diamonds', b: '(503 + 65 Bonus)', p: 'Rp 142.500'}, {n: '875 Diamonds', b: '(774 + 101 Bonus)', p: 'Rp 218.500'}, {n: '2010 Diamonds', b: '(1.708 + 302 Bonus)', p: 'Rp 475.000'},
+            {n: '4830 Diamonds', b: '(4.003 + 827 Bonus)', p: 'Rp 1.140.000'}
+        ],
+        'Free Fire': [
+            {n: '5 Diamonds', b: '', p: 'Rp 1.000'}, {n: '12 Diamonds', b: '', p: 'Rp 2.000'}, {n: '50 Diamonds', b: '', p: 'Rp 8.000'},
+            {n: '70 Diamonds', b: '', p: 'Rp 10.000'}, {n: '140 Diamonds', b: '', p: 'Rp 20.000'}, {n: '355 Diamonds', b: '', p: 'Rp 49.000'},
+            {n: '720 Diamonds', b: '', p: 'Rp 98.000'}, {n: '1450 Diamonds', b: '', p: 'Rp 189.000'}, {n: '2180 Diamonds', b: '', p: 'Rp 284.000'}, 
+            {n: '3640 Diamonds', b: '', p: 'Rp 473.000'}, {n: '7290 Diamonds', b: '', p: 'Rp 946.000'}, {n: '36.500 Diamonds', b: '', p: 'Rp 4.730.000'},
+            {n: '73.100 Diamonds', b: '', p: 'Rp 9.460.000'}
+        ],
+        'Roblox': [
+            {n: '50 RBX', b: '', p: 'Rp 8.000'}, {n: '100 RBX', b: '', p: 'Rp 15.000'}, {n: '200 RBX', b: '', p: 'Rp 29.000'},
+            {n: '300 RBX', b: '', p: 'Rp 42.000'}, {n: '400 RBX', b: '', p: 'Rp 57.000'}, {n: '500 RBX', b: '', p: 'Rp 69.000'}, 
+            {n: '700 RBX', b: '', p: 'Rp 97.000'}, {n: '800 RBX', b: '', p: 'Rp 110.000'}, {n: '900 RBX', b: '', p: 'Rp 123.000'}, 
+            {n: '1000 RBX', b: '', p: 'Rp 137.000'}, {n: '1050 RBX', b: '', p: 'Rp 145.000'}, {n: '1100 RBX', b: '', p: 'Rp 152.000'}, 
+            {n: '1300 RBX', b: 'No Bonus', p: 'Rp 180.000'}
+        ],
+        'PUBG': [
+            {n: '30 UC', b: '', p: 'Rp 7.500'}, {n: '60 UC', b: '', p: 'Rp 15.000'}, {n: '325 UC', b: '', p: 'Rp 75.000'},
+            {n: '660 UC', b: '', p: 'Rp 150.000'}, {n: '1800 UC', b: '', p: 'Rp 375.000'}, {n: '3850 UC', b: '', p: 'Rp 750.000'}, 
+            {n: '8100 UC', b: '', p: 'Rp 1.450.000'}
+        ],
+        'Magic Chess': [
+            {n: '5 Diamonds', b: '', p: 'Rp 1.425'}, {n: '12 Diamonds', b: '', p: 'Rp 3.135'}, {n: '19 Diamonds', b: '', p: 'Rp 4.845'},
+            {n: '28 Diamonds', b: '', p: 'Rp 7.125'}, {n: '44 Diamonds', b: '', p: 'Rp 11.400'}, {n: '59 Diamonds', b: '', p: 'Rp 15.105'},
+            {n: '85 Diamonds', b: '', p: 'Rp 21.945'}, {n: '170 Diamonds', b: '', p: 'Rp 43.890'}, {n: '240 Diamonds', b: '', p: 'Rp 61.845'},
+            {n: '296 Diamonds', b: '', p: 'Rp 72.960'}, {n: '408 Diamonds', b: '', p: 'Rp 104.595'}, {n: '568 Diamonds', b: '', p: 'Rp 143.355'},
+            {n: '875 Diamonds', b: '', p: 'Rp 220.590'}, {n: '2010 Diamonds', b: '', p: 'Rp 486.780'}, {n: '4830 Diamonds', b: '', p: 'Rp 1.140.855'},
+            {n: 'Battle for Discounts', b: '', p: 'Rp 14.203'}, {n: 'Lukas’s Battle Bounty', b: '', p: 'Rp 14.203'}, {n: 'Weekly Pass', b: '', p: 'Rp 28.500'}
+        ],
+        'Blood Strike': [
+            {n: '100 Gold', b: '', p: 'Rp 16.000'}, {n: '200 Gold', b: '', p: 'Rp 32.000'}, {n: '500 Gold', b: '', p: 'Rp 79.000'},
+            {n: '1000 Gold', b: '', p: 'Rp 155.000'}, {n: '2000 Gold', b: '', p: 'Rp 305.000'}, {n: '5000 Gold', b: '', p: 'Rp 760.000'}
+        ],
+        'CV DANA': cvData, 'CV OVO': cvData, 'CV GoPay': cvData
+    };
+
+    function setGame(game, el, category) {
+        selectedGame = game; currentCategory = category;
+        document.querySelectorAll('.card:nth-child(1) .select-btn').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+        
+        const idInput = document.getElementById('user_id');
+        const labelId = document.getElementById('label_id');
+
+        if (category === 'CV') {
+            labelId.innerText = "Nomor HP Tujuan";
+            idInput.placeholder = "Contoh: 081234567xxx";
+        } else if (game === 'MLBB' || game === 'Magic Chess') {
+            labelId.innerText = "User ID Akun";
+            idInput.placeholder = "Contoh: 12345678 (1234)";
+        } else {
+            labelId.innerText = "User ID Akun";
+            idInput.placeholder = "Contoh: 12345678";
+        }
+        
+        const list = document.getElementById('nominal_list');
+        list.innerHTML = "";
+        catalog[game].forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'select-btn';
+            let bonusHtml = item.b ? `<small>${item.b}</small>` : '';
+            div.innerHTML = `<p>${item.n}</p>${bonusHtml}<span>${item.p}</span>`;
+            div.onclick = function() {
+                document.querySelectorAll('#nominal_list .select-btn').forEach(n => n.classList.remove('active'));
+                div.classList.add('active');
+                selectedItem = item.n + (item.b ? ' ' + item.b : ''); selectedPrice = item.p;
+                document.getElementById('sticky_total').innerText = item.p;
+            };
+            list.appendChild(div);
+        });
+    }
+
+    function setMethod(method, el) {
+        selectedMethod = method;
+        document.querySelectorAll('.card:nth-child(4) .select-btn').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    function toggleAcc(id) {
+        const content = document.getElementById(id);
+        const isOpen = content.style.display === "block";
+        document.querySelectorAll('.acc-content').forEach(c => c.style.display = "none");
+        if(!isOpen) content.style.display = "block";
+    }
+
+    function checkout() {
+        const id = document.getElementById('user_id').value;
+        const email = document.getElementById('user_email').value;
+        const wa = document.getElementById('wa_number').value;
+
+        if(!selectedGame) return alert("Pilih Layanan (Step 1)!");
+        if(!id) return alert("Isi Data Akun/Nomor HP (Step 2)!");
+        if(!email) return alert("Isi Email (Wajib)!");
+        if(!selectedItem) return alert("Pilih Nominal (Step 3)!");
+        if(!selectedMethod) return alert("Pilih Metode Pembayaran (Step 4)!");
+        
+        const msg = `Halo Admin RushiMarket!\n\nLayanan: *${selectedGame}*\nID/No: *${id}*\nEmail: *${email}*\nNominal: *${selectedItem}*\nMetode: *${selectedMethod}*\nNo WA: *${wa || '-'}*\nTotal Bayar: *${selectedPrice}*`;
+        window.open(`https://wa.me/6285707356154?text=${encodeURIComponent(msg)}`);
+    }
+</script>
+
+</body>
+</html>
