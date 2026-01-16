@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RushiMarket | Top Up & CV Saldo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-body: #121212;
+            --bg-card: #1f1f1f;
+            --bg-item: #2b2b2b;
+            --accent: #f1c40f; 
+            --text-white: #ffffff;
+            --text-gray: #a0a0a0;
+            --border: #333;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-white);
+            margin: 0; padding: 0;
+            padding-bottom: 120px;
+        }
+
+        .top-info-bar {
+            background: #000;
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            border-bottom: 1px solid #222;
+        }
+        .top-location { display: flex; align-items: center; gap: 6px; }
+        .top-location i { color: #ff4d4d; }
+        .top-lang { display: flex; gap: 10px; }
+        .top-lang span { cursor: pointer; }
+        .lang-active { color: var(--accent); font-weight: 700; }
+
+        header {
+            background: #181818;
+            padding: 15px 20px;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 20px; font-weight: 800; color: var(--accent);
+            margin: 0; letter-spacing: 0.5px; text-transform: uppercase;
+        }
+        header h1 span { color: #ffffff; }
+
+        .container { max-width: 500px; margin: 0 auto; padding: 15px; }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px; padding: 20px; margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .step-num {
+            color: var(--accent); font-weight: 700; font-size: 12px;
+            margin-bottom: 8px; display: block; text-transform: uppercase;
+        }
+
+        h3 { margin: 0 0 15px 0; font-size: 16px; font-weight: 600; }
+
+        .category-label {
+            font-size: 11px; font-weight: 700; color: var(--text-gray);
+            margin: 20px 0 10px 0; text-transform: uppercase; border-left: 3px solid var(--accent);
+            padding-left: 8px;
+        }
+
+        .grid-layout { display: grid; gap: 10px; }
+        .grid-2 { grid-template-columns: 1fr 1fr; }
+        .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+        .select-btn {
+            background: var(--bg-item); border: 1px solid #444;
+            padding: 12px 8px; border-radius: 10px; text-align: center;
+            cursor: pointer; transition: 0.2s;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .select-btn h2 { margin: 0; font-size: 11px; font-weight: 600; color: white; }
+        .select-btn p { margin: 0; font-size: 13px; font-weight: 700; }
+        .select-btn small { font-size: 10px; color: var(--text-gray); font-weight: 400; display: block; }
+        .select-btn span { font-size: 10px; color: var(--accent); display: block; margin-top: 4px; }
+        .select-btn.active { border-color: var(--accent); background: rgba(241, 196, 15, 0.1); }
+
+        input[type="text"], input[type="email"] {
+            width: 100%; background: #111; border: 1px solid #444;
+            padding: 15px; border-radius: 8px; color: white; box-sizing: border-box;
+            outline: none; font-size: 14px; margin-bottom: 10px;
+        }
+
+        .important-note {
+            font-size: 11px; color: #ff4d4d; line-height: 1.4; margin-top: 5px; font-weight: 500;
+        }
+
+        .gogogo-footer-content { margin-top: 20px; padding: 0 5px; }
+        .promo-text { font-size: 14px; margin-bottom: 25px; font-weight: 400; color: #eee; }
+        
+        .region-lang-section { margin-bottom: 20px; }
+        .region-lang-title { font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #fff; }
+        .region-selector { 
+            display: flex; align-items: center; justify-content: space-between; 
+            border: 1px solid var(--accent); border-radius: 8px; padding: 10px 15px;
+            width: fit-content; min-width: 150px; cursor: pointer;
+        }
+        .region-selector img { width: 20px; margin-right: 10px; }
+        .region-selector span { font-size: 14px; color: var(--accent); font-weight: 500; }
+
+        .payment-logos { display: flex; align-items: center; gap: 15px; margin-bottom: 5px; flex-wrap: wrap; }
+        .payment-logos span { font-weight: 800; font-size: 14px; }
+
+        .acc-item { border-top: 1px solid #222; padding: 15px 0; }
+        .acc-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .acc-header span { font-size: 14px; font-weight: 500; }
+        .acc-content { display: none; padding: 10px 0; font-size: 13px; color: var(--text-gray); line-height: 1.8; }
+        .acc-content a { color: var(--text-gray); text-decoration: none; display: block; margin-bottom: 5px; }
+
+        .sticky-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: #181818; border-top: 1px solid #333;
+            padding: 12px 20px; display: flex; justify-content: space-between;
+            align-items: center; box-sizing: border-box; z-index: 1001;
+        }
+        .final-price-tag {
+            position: absolute; top: -35px; left: 0; width: 100%;
+            background: #2ecc71; color: #000; font-size: 12px;
+            padding: 8px 15px; box-sizing: border-box; font-weight: 600;
+            display: flex; align-items: center;
+        }
+        .final-price-tag i { margin-right: 8px; }
+
+        .btn-beli {
+            background: #ffc107; color: #000; border: none;
+            padding: 10px 35px; border-radius: 15px; font-weight: 700;
+            font-size: 15px; cursor: pointer; min-width: 100px;
+        }
+
+        /* MODAL CSS */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: none; 
+            justify-content: center; align-items: center; z-index: 2000;
+            padding: 20px; box-sizing: border-box;
+        }
+        .modal-content {
+            background: var(--bg-card); width: 100%; max-width: 400px;
+            border-radius: 15px; border: 1px solid var(--border); overflow: hidden;
+        }
+        .modal-header { padding: 15px 20px; background: #252525; border-bottom: 1px solid var(--border); font-weight: 700; color: var(--accent); }
+        .modal-body { padding: 20px; }
+        .modal-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; border-bottom: 1px solid #2a2a2a; padding-bottom: 5px; }
+        .modal-row span:last-child { font-weight: 600; color: white; text-align: right; }
+        .modal-footer { padding: 15px 20px; display: flex; gap: 10px; }
+        .btn-modal-close { background: #444; color: white; border: none; padding: 10px; border-radius: 8px; flex: 1; cursor: pointer; font-family: 'Poppins'; }
+        .btn-modal-confirm { background: var(--accent); color: black; border: none; padding: 10px; border-radius: 8px; flex: 2; cursor: pointer; font-weight: 700; font-family: 'Poppins'; }
+
+        /* HELP LIST CSS */
+        .help-list { display: flex; flex-direction: column; gap: 10px; }
+        .help-item {
+            background: #2b2b2b; padding: 15px; border-radius: 10px;
+            text-decoration: none; color: white; display: flex; align-items: center;
+            gap: 15px; transition: 0.3s; border: 1px solid #444;
+        }
+        .help-item:hover { background: #333; border-color: var(--accent); }
+        .help-item i { font-size: 20px; width: 25px; text-align: center; }
+        .help-item .fa-whatsapp { color: #25d366; }
+        .help-item .fa-instagram { color: #e1306c; }
+        .help-item .fa-telegram { color: #0088cc; }
+
+        /* INVOICE SECTION CSS */
+        #invoice_page { display: none; }
+        .invoice-card { background: var(--bg-card); border-radius: 15px; padding: 25px; border: 1px dashed #444; position: relative; }
+        .invoice-header { text-align: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 15px; }
+        
+        .status-badge { color: white; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-top: 10px; display: inline-block; }
+        .status-waiting { background: #e67e22; }
+        .status-success { background: #2ecc71; }
+        .status-failed { background: #e74c3c; }
+
+        .invoice-id { font-size: 12px; color: var(--text-gray); margin-top: 5px; }
+        .invoice-detail-item { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 13px; }
+        .invoice-detail-item label { color: var(--text-gray); }
+        .invoice-detail-item span { font-weight: 500; }
+        .total-pay-box { background: #252525; padding: 15px; border-radius: 10px; text-align: center; margin-top: 20px; border: 1px solid var(--accent); }
+        .total-pay-box h4 { margin: 0; font-size: 12px; color: var(--text-gray); }
+        .total-pay-box .price-big { font-size: 24px; color: var(--accent); font-weight: 800; margin: 5px 0; }
+        .btn-wa-confirm { background: #25d366; color: white; width: 100%; border: none; padding: 15px; border-radius: 10px; font-weight: 700; font-size: 14px; margin-top: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-back-home { background: transparent; color: var(--text-gray); width: 100%; border: 1px solid #333; padding: 10px; border-radius: 10px; font-size: 12px; margin-top: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div id="main_app">
+    <div class="top-info-bar">
+        <div class="top-location"><i class="fas fa-location-dot"></i> <span>Indonesia</span></div>
+        <div class="top-lang"><span class="lang-active">Indonesia</span> <span>|</span> <span>English</span></div>
+    </div>
+
+    <header>
+        <h1>RUSHI<span>MARKET</span></h1>
+        <i class="fas fa-bars" style="font-size: 20px; cursor: pointer;" onclick="openHelpModal()"></i>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <span class="step-num">Step 1</span>
+            <h3>Pilih Layanan</h3>
+            <div class="category-label">Top Up Game</div>
+            <div class="grid-layout grid-3">
+                <div class="select-btn" onclick="setGame('MLBB', this, 'Game')"><h2>MLBB</h2></div>
+                <div class="select-btn" onclick="setGame('Free Fire', this, 'Game')"><h2>FREE FIRE</h2></div>
+                <div class="select-btn" onclick="setGame('Roblox', this, 'Game')"><h2>ROBLOX</h2></div>
+                <div class="select-btn" onclick="setGame('PUBG', this, 'Game')"><h2>PUBG</h2></div>
+                <div class="select-btn" onclick="setGame('Magic Chess', this, 'Game')"><h2>MAGIC CHESS</h2></div>
+                <div class="select-btn" onclick="setGame('Blood Strike', this, 'Game')"><h2>BS</h2></div>
+            </div>
+            <div class="category-label">Convert Saldo (+ Admin 500)</div>
+            <div class="grid-layout grid-3">
+                <div class="select-btn" onclick="setGame('CV DANA', this, 'CV')"><h2>DANA</h2></div>
+                <div class="select-btn" onclick="setGame('CV OVO', this, 'CV')"><h2>OVO</h2></div>
+                <div class="select-btn" onclick="setGame('CV GoPay', this, 'CV')"><h2>GOPAY</h2></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <span class="step-num">Step 2</span>
+            <h3 id="label_id">Data Akun</h3>
+            <input type="text" id="user_id" placeholder="Pilih Layanan Dahulu">
+            
+            <h3 style="margin-top: 15px; font-size: 14px;">Masukkan Email (Wajib)</h3>
+            <input type="email" id="user_email" placeholder="Contoh: user@email.com">
+            <p class="important-note">PENTING: Email dibutuhkan untuk bukti transfer & proses refund jika transaksi gagal.</p>
+        </div>
+
+        <div class="card">
+            <span class="step-num">Step 3</span>
+            <h3>Pilih Nominal</h3>
+            <div id="nominal_list" class="grid-layout grid-2" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
+                <p style="text-align: center; width: 100%; grid-column: span 2; opacity: 0.5; font-size: 12px; padding: 20px;">Pilih layanan di Step 1 untuk melihat daftar nominal...</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <span class="step-num">Step 4</span>
+            <h3>Metode Pembayaran</h3>
+            <div class="grid-layout grid-2">
+                <div class="select-btn" onclick="setMethod('QRIS', this)"><h2>QRIS</h2></div>
+                <div class="select-btn" onclick="setMethod('DANA', this)"><h2>DANA</h2></div>
+                <div class="select-btn" onclick="setMethod('GoPay', this)" style="grid-column: span 2;"><h2>GOPAY</h2></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <span class="step-num">Step 5</span>
+            <h3>Nomor WhatsApp <span style="color:var(--text-gray); font-size: 12px; font-weight: 400;">(Opsional)</span></h3>
+            <input type="text" id="wa_number" placeholder="Contoh: 081234567xxx">
+        </div>
+
+        <div class="gogogo-footer-content">
+            <p class="promo-text">Toko game online harga termurah tanpa biaya admin</p>
+            <div class="region-lang-section">
+                <div class="region-lang-title">Wilayah & Bahasa</div>
+                <div class="region-selector">
+                    <div style="display:flex; align-items:center;">
+                        <img src="https://flagcdn.com/w40/id.png" alt="Indonesia Flag">
+                        <span>Indonesia</span>
+                    </div>
+                    <i class="fas fa-chevron-right" style="color:var(--accent); font-size:12px; margin-left:10px;"></i>
+                </div>
+            </div>
+            <p style="font-size: 13px; font-weight: 500; margin-bottom: 10px;">Mudah, cepat, dan 100% aman</p>
+            <div class="payment-logos">
+                <span style="color:#00aa13;">gopay</span> <span style="color:#008ced;">DANA</span> <span style="color:#4c3494;">OVO</span> <span style="color:#ee4d2d;">ShopeePay</span>
+            </div>
+     <div class="acc-item">
+                <div class="acc-header" onclick="toggleAcc('acc1')"><span>Top Up</span><i class="fas fa-chevron-down"></i></div>
+                <div id="acc1" class="acc-content"><a href="#">Mobile Legends</a><a href="#">Free Fire</a><a href="#">PUBG Mobile</a><a href="#">Blood Strike</a><a href="#">Magic Chess</a></div>
+            </div>
+            <div class="acc-item">
+                <div class="acc-header" onclick="toggleAcc('acc2')"><span>Voucher & Saldo</span><i class="fas fa-chevron-down"></i></div>
+                <div id="acc2" class="acc-content"><a href="#">Roblox (RBX)</a><a href="#">Convert DANA</a><a href="#">Convert OVO</a><a href="#">Convert GoPay</a></div>
+            </div>
+            <div class="acc-item">
+                <div class="acc-header" onclick="toggleAcc('acc3')"><span>Informasi Umum</span><i class="fas fa-chevron-down"></i></div>
+                <div id="acc3" class="acc-content">
+                    <span style="cursor: default; display: block; padding: 8px 0;"><i class="far fa-envelope"></i> support@gogogo.id</span>
+                    <a href="#"><i class="fas fa-rss"></i> Blog</a>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px; font-size: 11px; color: #666;">© 2026 RushiMarket Digital Indonesia</div>
+        </div>
+    </div>
+
+    <div class="sticky-bar">
+        <div class="final-price-tag"><i class="fas fa-check-circle"></i> Harga final, dijamin gak ada biaya tambahan!</div>
+        <div style="font-size: 11px; color: #888;">Total Bayar<br><strong id="sticky_total" style="font-size: 16px; color: var(--accent);">Rp 0</strong></div>
+        <button class="btn-beli" onclick="checkout()">Beli</button>
+    </div>
+</div>
+
+<div id="invoice_page" class="container" style="margin-top: 20px;">
+    <div class="invoice-card">
+        <div class="invoice-header">
+            <h2 style="color:var(--accent); margin:0; font-size: 24px;">RushiMarket</h2>
+            <div class="invoice-id" id="inv_id">#INV-000000</div>
+            <div id="status_label" class="status-badge status-waiting">Menunggu Pembayaran</div>
+        </div>
+        <div class="invoice-body">
+            <div class="invoice-detail-item"><label>ID Transaksi</label> <span id="inv_trx_id" style="color:var(--accent); font-weight:bold;">-</span></div>
+            <div class="invoice-detail-item"><label>Tanggal</label> <span id="inv_date">-</span></div>
+            <div class="invoice-detail-item"><label>Layanan</label> <span id="inv_game">-</span></div>
+            <div class="invoice-detail-item"><label>ID / Tujuan</label> <span id="inv_user">-</span></div>
+            <div class="invoice-detail-item"><label>Item</label> <span id="inv_item">-</span></div>
+            <div class="invoice-detail-item"><label>Metode</label> <span id="inv_method">-</span></div>
+            <div class="invoice-detail-item"><label>Email</label> <span id="inv_email">-</span></div>
+            
+            <div class="total-pay-box">
+                <h4>Total yang harus dibayar:</h4>
+                <div class="price-big" id="inv_price">Rp 0</div>
+                <p id="inv_note" style="font-size: 10px; color: var(--text-gray); margin: 0;">Silahkan klik tombol di bawah untuk instruksi pembayaran via WhatsApp</p>
+            </div>
+            <button class="btn-wa-confirm" id="btn_wa_confirm" onclick="finalWhatsApp()"><i class="fab fa-whatsapp"></i> Konfirmasi ke WhatsApp</button>
+            <button class="btn-back-home" onclick="location.reload()">Kembali ke Beranda</button>
+        </div>
+    </div>
+</div>
+
+<div id="helpModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">Pusat Bantuan</div>
+        <div class="modal-body">
+            <div class="help-list">
+                <div class="help-item" onclick="openCheckModal(); closeHelpModal();">
+                    <i class="fas fa-search"></i>
+                    <div>
+                        <div style="font-weight: 600; font-size: 14px;">Cek Status Pesanan</div>
+                        <div style="font-size: 11px; color: var(--text-gray);">Lihat status transaksi Anda</div>
+                    </div>
+                </div>
+                <a href="https://wa.me/6285707356154" target="_blank" class="help-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <div>
+                        <div style="font-weight: 600; font-size: 14px;">WhatsApp Admin</div>
+                        <div style="font-size: 11px; color: var(--text-gray);">Fast Respon (08:00 - 22:00)</div>
+                    </div>
+                </a>
+                <a href="https://www.instagram.com/rushi.market.official?igsh=MXJ3bzNkZThucnVjYw==" target="_blank" class="help-item">
+                    <i class="fab fa-instagram"></i>
+                    <div>
+                        <div style="font-weight: 600; font-size: 14px;">Instagram</div>
+                        <div style="font-size: 11px; color: var(--text-gray);">Follow untuk info promo</div>
+                    </div>
+                </a>
+                <a href="https://t.me/rushimarket" target="_blank" class="help-item">
+                    <i class="fab fa-telegram"></i>
+                    <div>
+                        <div style="font-weight: 600; font-size: 14px;">Telegram</div>
+                        <div style="font-size: 11px; color: var(--text-gray);">Channel update harga</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-modal-close" style="width: 100%;" onclick="closeHelpModal()">Tutup</button>
+        </div>
+    </div>
+</div>
+
+<div id="confirmModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">Konfirmasi Pesanan</div>
+        <div class="modal-body" id="modal_body_content">
+            </div>
+        <div class="modal-footer">
+            <button class="btn-modal-close" onclick="closeModal()">Batal</button>
+            <button class="btn-modal-confirm" onclick="confirmPurchase()">Konfirmasi & Beli</button>
+        </div>
+    </div>
+</div>
+
+<div id="checkModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">Pengecekan Pesanan</div>
+        <div class="modal-body">
+            <p style="font-size: 12px; color: var(--text-gray); margin-bottom: 15px;">Masukkan ID Transaksi Anda untuk melihat status pesanan.</p>
+            <input type="text" id="check_trx_id" placeholder="Contoh: RMK-1712345678">
+            <button class="btn-modal-confirm" style="width: 100%; margin-top: 10px;" onclick="processCheck()">Cek Status</button>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-modal-close" style="width: 100%;" onclick="closeCheckModal()">Tutup</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let selectedGame = ""; let selectedItem = ""; let selectedPrice = ""; let selectedMethod = ""; let currentCategory = "";
+
+    function formatRupiah(angka) {
+        return "Rp " + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    const cvSteps = [15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 250, 300, 400, 500, 750, 1000];
+    const cvData = cvSteps.map(v => {
+        const nominalAsli = v * 1000;
+        const hargaFinal = nominalAsli + 500;
+        return { n: `Saldo ${v >= 1000 ? '1 Juta' : v + '.000'}`, b: '', p: formatRupiah(hargaFinal) };
+    });
+
+    const catalog = {
+        'MLBB': [
+            {n: '3 Diamonds', b: '', p: 'Rp 1.171'}, {n: '5 Diamonds', b: '', p: 'Rp 1.423'}, {n: '12 Diamonds', b: '(11 + 1 Bonus)', p: 'Rp 3.323'},
+            {n: '19 Diamonds', b: '(17 + 2 Bonus)', p: 'Rp 5.223'}, {n: '28 Diamonds', b: '(25 + 3 Bonus)', p: 'Rp 7.600'}, {n: '44 Diamonds', b: '(40 + 4 Bonus)', p: 'Rp 11.400'},
+            {n: '59 Diamonds', b: '(53 + 6 Bonus)', p: 'Rp 15.200'}, {n: '85 Diamonds', b: '(77 + 8 Bonus)', p: 'Rp 21.850'}, {n: '170 Diamonds', b: '(154 + 16 Bonus)', p: 'Rp 43.700'},
+            {n: '240 Diamonds', b: '(217 + 23 Bonus)', p: 'Rp 61.750'}, {n: '296 Diamonds', b: '(256 + 40 Bonus)', p: 'Rp 76.000'}, {n: '408 Diamonds', b: '(367 + 41 Bonus)', p: 'Rp 104.500'},
+            {n: '568 Diamonds', b: '(503 + 65 Bonus)', p: 'Rp 142.500'}, {n: '875 Diamonds', b: '(774 + 101 Bonus)', p: 'Rp 218.500'}, {n: '2010 Diamonds', b: '(1.708 + 302 Bonus)', p: 'Rp 475.000'},
+            {n: '4830 Diamonds', b: '(4.003 + 827 Bonus)', p: 'Rp 1.140.000'}
+        ],
+        'Free Fire': [
+            {n: '5 Diamonds', b: '', p: 'Rp 1.000'}, {n: '12 Diamonds', b: '', p: 'Rp 2.000'}, {n: '50 Diamonds', b: '', p: 'Rp 8.000'},
+            {n: '70 Diamonds', b: '', p: 'Rp 10.000'}, {n: '140 Diamonds', b: '', p: 'Rp 20.000'}, {n: '355 Diamonds', b: '', p: 'Rp 49.000'},
+            {n: '720 Diamonds', b: '', p: 'Rp 98.000'}, {n: '1450 Diamonds', b: '', p: 'Rp 189.000'}, {n: '2180 Diamonds', b: '', p: 'Rp 284.000'}, 
+            {n: '3640 Diamonds', b: '', p: 'Rp 473.000'}, {n: '7290 Diamonds', b: '', p: 'Rp 946.000'}, {n: '36.500 Diamonds', b: '', p: 'Rp 4.730.000'},
+            {n: '73.100 Diamonds', b: '', p: 'Rp 9.460.000'}
+        ],
+        'Roblox': [
+            {n: '50 RBX', b: '', p: 'Rp 8.000'}, {n: '100 RBX', b: '', p: 'Rp 15.000'}, {n: '200 RBX', b: '', p: 'Rp 29.000'},
+            {n: '300 RBX', b: '', p: 'Rp 42.000'}, {n: '400 RBX', b: '', p: 'Rp 57.000'}, {n: '500 RBX', b: '', p: 'Rp 69.000'}, 
+            {n: '700 RBX', b: '', p: 'Rp 97.000'}, {n: '800 RBX', b: '', p: 'Rp 110.000'}, {n: '900 RBX', b: '', p: 'Rp 123.000'}, 
+            {n: '1000 RBX', b: '', p: 'Rp 137.000'}, {n: '1050 RBX', b: 'Rp 145.000'}, {n: '1100 RBX', b: '', p: 'Rp 152.000'}, 
+            {n: '1300 RBX', b: 'No Bonus', p: 'Rp 180.000'}
+        ],
+        'PUBG': [
+            {n: '30 UC', b: '', p: 'Rp 7.500'}, {n: '60 UC', b: '', p: 'Rp 15.000'}, {n: '325 UC', b: '', p: 'Rp 75.000'},
+            {n: '660 UC', b: '', p: 'Rp 150.000'}, {n: '1800 UC', b: '', p: 'Rp 375.000'}, {n: '3850 UC', b: '', p: 'Rp 750.000'}, 
+            {n: '8100 UC', b: '', p: 'Rp 1.450.000'}
+        ],
+        'Magic Chess': [
+            {n: '5 Diamonds', b: '', p: 'Rp 1.425'}, {n: '12 Diamonds', b: '', p: 'Rp 3.135'}, {n: '19 Diamonds', b: '', p: 'Rp 4.845'},
+            {n: '28 Diamonds', b: '', p: 'Rp 7.125'}, {n: '44 Diamonds', b: '', p: 'Rp 11.400'}, {n: '59 Diamonds', b: '', p: 'Rp 15.105'},
+            {n: '85 Diamonds', b: '', p: 'Rp 21.945'}, {n: '170 Diamonds', b: '', p: 'Rp 43.890'}, {n: '240 Diamonds', b: '', p: 'Rp 61.845'},
+            {n: '296 Diamonds', b: '', p: 'Rp 72.960'}, {n: '408 Diamonds', b: '', p: 'Rp 104.595'}, {n: '568 Diamonds', b: '', p: 'Rp 143.355'},
+            {n: '875 Diamonds', b: '', p: 'Rp 220.590'}, {n: '2010 Diamonds', b: '', p: 'Rp 486.780'}, {n: '4830 Diamonds', b: '', p: 'Rp 1.140.855'}
+        ],
+        'Blood Strike': [
+            {n: '100 Gold', b: '', p: 'Rp 16.000'}, {n: '200 Gold', b: '', p: 'Rp 32.000'}, {n: '500 Gold', b: '', p: 'Rp 79.000'},
+            {n: '1000 Gold', b: '', p: 'Rp 155.000'}, {n: '2000 Gold', b: '', p: 'Rp 305.000'}, {n: '5000 Gold', b: '', p: 'Rp 760.000'}
+        ],
+        'CV DANA': cvData, 'CV OVO': cvData, 'CV GoPay': cvData
+    };
+
+    function setGame(game, el, category) {
+        selectedGame = game; currentCategory = category;
+        document.querySelectorAll('.card:nth-child(1) .select-btn').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+        
+        const idInput = document.getElementById('user_id');
+        const labelId = document.getElementById('label_id');
+        if (category === 'CV') {
+            labelId.innerText = "No / Tujuan";
+            idInput.placeholder = "Contoh: 081234567xxx";
+        } else {
+            labelId.innerText = "User ID Akun";
+            idInput.placeholder = (game === 'MLBB') ? "Contoh: 12345678 (1234)" : "Contoh: 12345678";
+        }
+        
+        const list = document.getElementById('nominal_list');
+        list.innerHTML = "";
+        catalog[game].forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'select-btn';
+            let bonusHtml = item.b ? `<small>${item.b}</small>` : '';
+            div.innerHTML = `<p>${item.n}</p>${bonusHtml}<span>${item.p}</span>`;
+            div.onclick = function() {
+                document.querySelectorAll('#nominal_list .select-btn').forEach(n => n.classList.remove('active'));
+                div.classList.add('active');
+                selectedItem = item.n + (item.b ? ' ' + item.b : ''); selectedPrice = item.p;
+                document.getElementById('sticky_total').innerText = item.p;
+            };
+            list.appendChild(div);
+        });
+    }
+
+    function setMethod(method, el) {
+        selectedMethod = method;
+        document.querySelectorAll('.card:nth-child(4) .select-btn').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    function toggleAcc(id) {
+        const content = document.getElementById(id);
+        const isOpen = content.style.display === "block";
+        document.querySelectorAll('.acc-content').forEach(c => c.style.display = "none");
+        if(!isOpen) content.style.display = "block";
+    }
+
+    function checkout() {
+        const userId = document.getElementById('user_id').value;
+        const email = document.getElementById('user_email').value;
+        if(!selectedGame || !userId || !selectedItem || !selectedMethod || !email) {
+            return alert("Lengkapi pesanan Anda (Layanan, ID, Email, Nominal, & Metode)!");
+        }
+
+        document.getElementById('modal_body_content').innerHTML = `
+            <div class="modal-row"><span>Layanan:</span><span>${selectedGame}</span></div>
+            <div class="modal-row"><span>Item:</span><span>${selectedItem}</span></div>
+            <div class="modal-row"><span>ID/Tujuan:</span><span>${userId}</span></div>
+            <div class="modal-row"><span>Metode:</span><span>${selectedMethod}</span></div>
+            <div class="modal-row" style="margin-top:15px; border:none;">
+                <span style="font-weight:700; color:white;">Total:</span>
+                <span style="color:var(--accent); font-size:18px; font-weight:700;">${selectedPrice}</span>
+            </div>
+        `;
+        document.getElementById('confirmModal').style.display = 'flex';
+    }
+
+    function confirmPurchase() {
+        const trxId = "RMK-" + Date.now();
+        
+        const now = new Date();
+        const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agt", "Sep", "Okt", "Nov", "Des"];
+        const day = now.getDate();
+        const month = months[now.getMonth()];
+        const year = now.getFullYear();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const formattedDate = `${day} ${month} ${year}, ${hours}:${minutes}:${seconds}`;
+
+        const data = {
+            trxId: trxId,
+            game: selectedGame,
+            user: document.getElementById('user_id').value,
+            item: selectedItem,
+            method: selectedMethod,
+            email: document.getElementById('user_email').value,
+            price: selectedPrice,
+            date: formattedDate,
+            inv: "#INV-" + Math.floor(100000 + Math.random() * 900000)
+        };
+        localStorage.setItem(trxId, JSON.stringify(data));
+        renderInvoice(data, 'waiting');
+        
+        setTimeout(() => {
+            const badge = document.getElementById('status_label');
+            if(badge) {
+                badge.className = 'status-badge status-success';
+                badge.innerText = "PEMBAYARAN BERHASIL";
+                document.getElementById('btn_wa_confirm').style.display = 'none';
+            }
+        }, 60000);
+    }
+
+    function renderInvoice(data, status) {
+        document.getElementById('main_app').style.display = 'none';
+        document.getElementById('confirmModal').style.display = 'none';
+        document.getElementById('invoice_page').style.display = 'block';
+        window.scrollTo(0,0);
+        
+        document.getElementById('inv_trx_id').innerText = data.trxId;
+        document.getElementById('inv_game').innerText = data.game;
+        document.getElementById('inv_user').innerText = data.user;
+        document.getElementById('inv_item').innerText = data.item;
+        document.getElementById('inv_method').innerText = data.method;
+        document.getElementById('inv_email').innerText = data.email;
+        document.getElementById('inv_price').innerText = data.price;
+        document.getElementById('inv_date').innerText = data.date;
+        document.getElementById('inv_id').innerText = data.inv;
+
+        const badge = document.getElementById('status_label');
+        if(status === 'success') {
+            badge.className = 'status-badge status-success';
+            badge.innerText = "PEMBAYARAN BERHASIL";
+            document.getElementById('btn_wa_confirm').style.display = 'none';
+        } else {
+            badge.className = 'status-badge status-waiting';
+            badge.innerText = "MENUNGGU PEMBAYARAN";
+            document.getElementById('btn_wa_confirm').style.display = 'flex';
+        }
+    }
+
+    function processCheck() {
+        const trx = document.getElementById('check_trx_id').value;
+        const savedData = localStorage.getItem(trx);
+        if(savedData) {
+            renderInvoice(JSON.parse(savedData), 'success');
+            document.getElementById('checkModal').style.display = 'none';
+        } else {
+            alert("ID Transaksi tidak ditemukan!");
+        }
+    }
+
+    function closeModal() { document.getElementById('confirmModal').style.display = 'none'; }
+    function openCheckModal() { document.getElementById('checkModal').style.display = 'flex'; }
+    function closeCheckModal() { document.getElementById('checkModal').style.display = 'none'; }
+    function openHelpModal() { document.getElementById('helpModal').style.display = 'flex'; }
+    function closeHelpModal() { document.getElementById('helpModal').style.display = 'none'; }
+    
+    function finalWhatsApp() {
+        const id = document.getElementById('user_id').value;
+        const email = document.getElementById('user_email').value;
+        const wa = document.getElementById('wa_number').value;
+        const inv = document.getElementById('inv_id').innerText;
+        const trx = document.getElementById('inv_trx_id').innerText;
+
+        const msg = `Halo Admin RushiMarket!\n\n*TRX ID: ${trx}*\n*INVOICE: ${inv}*\nLayanan: *${selectedGame}*\nID/No: *${id}*\nEmail: *${email}*\nNominal: *${selectedItem}*\nMetode: *${selectedMethod}*\nNo WA: *${wa || '-'}*\nTotal: *${selectedPrice}*\n\n_Mohon segera diproses ya admin!_`;
+        window.open(`https://wa.me/6285707356154?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+</script>
+</body>
+</html>
